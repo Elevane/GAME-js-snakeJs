@@ -109,11 +109,15 @@ window.onload = function(){
         }
         
 
-        if(snakeX >= SCREENWIDTH || snakeX <= -1 || snakeY >= SCREENHEIGHT || snakeY <= -1){
-            clearInterval(run);
-            ctx.fillStyle = "white";
-            ctx.font = "20px Arial";
-            ctx.fillText("|| Press Space to restart ||", 80, 450);
+       
+
+        function collision(head,array){
+            for(let i = 0; i < array.length; i++){
+                if(head.x == array[i].x && head.y == array[i].y){
+                    return true;
+                }
+            }
+            return false;
         }
             
             
@@ -141,7 +145,12 @@ window.onload = function(){
             y : snakeY
         }
 
-        
+        if(snakeX >= SCREENWIDTH || snakeX <= -1 || snakeY >= SCREENHEIGHT || snakeY <= -1 || collision(newHead,snake)){
+            clearInterval(run);
+            ctx.fillStyle = "white";
+            ctx.font = "20px Arial";
+            ctx.fillText("|| Press Space to restart ||", 80, 450);
+        }
         
         // add a cube at start of teh snake so appearing to move foward
         snake.unshift(newHead);
@@ -158,13 +167,15 @@ window.onload = function(){
             index = Math.floor(Math.random() * Math.floor(ligney.length));
             appleY = ligney[index];
         }
-       
+        
     
        
 
         ctx.fillStyle = "white";
         ctx.font = "20px Arial";
         ctx.fillText("Your score :"+ score, 10, 490);
+
+        
     }
     
     
